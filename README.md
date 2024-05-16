@@ -16,7 +16,7 @@ Author and developer: ___A.A Suvorov___
 
 ## Images:
 
-![logo](https://github.com/smartlegionlab/ConsolePassGen/raw/master/data/images/ConsoleSmartPassGen.png)
+![logo](https://github.com/smartlegionlab/ConsoleSmartPassGen/raw/master/data/images/ConsoleSmartPassGen.png)
 
 ***
 
