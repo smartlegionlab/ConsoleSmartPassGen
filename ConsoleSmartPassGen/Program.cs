@@ -66,7 +66,7 @@ class ConsoleSmartPasswordGeneratorApp
         Console.WriteLine("*** Console Smart Password Generator ***");
         SmartRandomGen smartRandomGen = new SmartRandomGen();
         string password = "";
-        Console.WriteLine("Введите длину пароля: ");
+        Console.WriteLine("Enter password length: ");
         printer.PrintCharacter('-', 23);
         int passwordLength = 0;
         try
@@ -77,31 +77,30 @@ class ConsoleSmartPasswordGeneratorApp
         catch (Exception e)
         {
             passwordLength = 12;
-            Console.WriteLine("Ошибка! Вы не ввели длину пароля. Использую 12 символов.");
+            Console.WriteLine("Error! You have not entered a password length. I use 12 characters.");
             printer.PrintCharacter('-', 23);
         }
         if (passwordLength <= 0)
         {
             passwordLength = 12;
-            Console.WriteLine("Ошибка! Неверная длина пароля. Использую 12 символов.");
+            Console.WriteLine("Error! Invalid password length. I use 12 characters.");
             printer.PrintCharacter('-', 23);
         }
         else if (passwordLength > 1000)
         {
             passwordLength = 1000;
-            Console.WriteLine("Ошибка! Пароль не может быть длинее 1000 символов. Использую 1000 символов.");
+            Console.WriteLine("Error! The password cannot be longer than 1000 characters. I use 1000 characters.");
             printer.PrintCharacter('-', 23);
         }
         string secretPhrase = "";
-        Console.WriteLine("Введите секретную фразу: ");
+        Console.WriteLine("Enter the secret phrase: ");
         printer.PrintCharacter('-', 23);
         secretPhrase = Console.ReadLine();
         printer.PrintCharacter('-', 23);
         password = smartRandomGen.GenerateSmartRandomString(passwordLength, secretPhrase);
         Console.WriteLine(password);
         printer.PrintCharacter('-', 23);
-        // Ожидание реакции пользователя
-        Console.WriteLine("Нажмите <Enter> для выхода...");
+        Console.WriteLine("Press <Enter> to exit...");
         Console.Read();
         printer.PrintCharacter('-', 23);
         Console.WriteLine("=== Smart Legion Lab ===");

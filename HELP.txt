@@ -1,0 +1,4 @@
+If the application does not start:
+Download and install: https://aka.ms/dotnet-core-applaunch?missing_runtime=true&arch=x64&rid=win-x64&os=win10&apphost_version=8.0.1
+
+Additional Help: https://github.com/smartlegionlab/SmartPasswordGenerator/
