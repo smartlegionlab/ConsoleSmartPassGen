@@ -1,4 +1,4 @@
-# ConsoleSmartPassGen
+# ConsoleSmartPassGen <sup>v0.2.0</sup>
 
 ***
 
@@ -20,7 +20,7 @@ Author and developer: ___A.A. Suvorov___
 
 ***
 
-> Download: [ConsoleSmartPassGen](https://github.com/smartlegionlab/ConsoleSmartPassGen/releases/download/v0.1.0/ConsoleSmartPassGen.zip);
+> Download: [ConsoleSmartPassGen](https://github.com/smartlegionlab/ConsoleSmartPassGen/releases/download/v0.2.0/ConsoleSmartPassGen.zip);
 
 ***
 
