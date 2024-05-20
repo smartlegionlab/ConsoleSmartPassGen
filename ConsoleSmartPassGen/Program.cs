@@ -4,12 +4,150 @@ using System.Security.Cryptography;
 using System.Text;
 
 
-class Strings
+class StringDataMaster
 {
-    public static readonly string UppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static readonly string LowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
-    public static readonly string Digits = "0123456789";
-    public static readonly string SpecialCharacters = "@$!%*#?&-";
+    public Random rand = new Random();
+    public string numbers = "1234567890";
+    public string simbols = "@$!%*#?&-";
+    public string smallLeters = "abcdefjhijklmnopqrstuvwxyz";
+    public string bigLeters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    public char[] GetNumbers()
+    {
+        return this.numbers.ToCharArray();
+    }
+
+    public char[] GetSimbols()
+    {
+        return this.simbols.ToCharArray();
+    }
+
+    public char[] GetSmallLaters()
+    {
+        return this.smallLeters.ToCharArray();
+    }
+
+    public char[] GetBigLaters()
+    {
+        return this.bigLeters.ToCharArray();
+    }
+
+    public char[] GetAllStrings()
+    {
+        string letters = this.numbers + this.simbols + this.smallLeters + this.bigLeters;
+        return letters.ToCharArray();
+    }
+}
+
+
+class BaseRandomGen
+{
+    StringDataMaster stringDataMaster = new StringDataMaster();
+
+    private string GetRandomString(char[] items, int length)
+    {
+        string randomString = "";
+        for (int i = 1; i <= length; i++)
+        {
+            int letter_num = this.stringDataMaster.rand.Next(0, items.Length - 1);
+            randomString += items[letter_num];
+        }
+
+        return randomString;
+    }
+
+    public string CreateRandomString(int length)
+    {
+        char[] allStrings = this.stringDataMaster.GetAllStrings();
+        string newString = this.GetRandomString(allStrings, length);
+        return newString;
+    }
+
+    public string CreateRandomNumbers(int length)
+    {
+        char[] numbers = this.stringDataMaster.GetNumbers();
+        string newString = this.GetRandomString(numbers, length);
+        return newString;
+    }
+
+    public string CreateRandomSimbols(int length)
+    {
+        char[] simbols = this.stringDataMaster.GetSimbols();
+        string newString = this.GetRandomString(simbols, length);
+        return newString;
+    }
+
+    public string CreateRandomSmallLetters(int length)
+    {
+        char[] smallLetters = this.stringDataMaster.GetSmallLaters();
+        string newString = this.GetRandomString(smallLetters, length);
+        return newString;
+    }
+
+    public string CreateRandomBigLetters(int length)
+    {
+        char[] bigLetters = this.stringDataMaster.GetBigLaters();
+        string newString = this.GetRandomString(bigLetters, length);
+        return newString;
+    }
+}
+
+
+class SmartRandomGen
+{
+
+    StringDataMaster stringDataMaster = new StringDataMaster();
+
+    private int GetSeed(string input)
+    {
+        byte[] hash;
+        using (SHA256 sha256 = SHA256.Create())
+        {
+            hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
+        }
+
+        int seed = BitConverter.ToInt32(hash, 0);
+        return seed;
+    }
+
+    private string GetSmartRandomString(char[] items, int length, string seed)
+    {
+        int seedHash = this.GetSeed(seed);
+        Random rand = new Random(seedHash);
+        StringBuilder randomString = new StringBuilder();
+
+        for (int i = 0; i < length; i++)
+        {
+            int letter_num = rand.Next(0, items.Length);
+            randomString.Append(items[letter_num]);
+        }
+
+        return randomString.ToString();
+    }
+
+    public string CreateSmartRandomString(int length, string secret)
+    {
+        char[] allString = this.stringDataMaster.GetAllStrings();
+        string newString = this.GetSmartRandomString(allString, length, secret);
+        return newString;
+    }
+
+}
+
+class SmartPassGen
+{
+    BaseRandomGen baseRandomGen = new BaseRandomGen();
+    SmartRandomGen smartRandomGen = new SmartRandomGen();
+
+    public string CreatePassword(int length)
+    {
+        return baseRandomGen.CreateRandomString(length);
+    }
+
+    public string CreateSmartPassword(int length, string secret)
+    {
+        return smartRandomGen.CreateSmartRandomString(length, secret);
+    }
 }
 
 class CharacterPrinter
@@ -25,46 +163,13 @@ class CharacterPrinter
 }
 
 
-class SmartRandomGen
-{
-    private int GetSeed(string input)
-    {
-        byte[] hash;
-        using (SHA256 sha256 = SHA256.Create())
-        {
-            hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(input));
-        }
-
-        int seed = BitConverter.ToInt32(hash, 0);
-        return seed;
-    }
-
-    public string GenerateSmartRandomString(int length, string secret)
-    {
-        int seedHash = this.GetSeed(secret);
-        Random rand = new Random(seedHash);
-        string allCharacters = Strings.UppercaseLetters + Strings.LowercaseLetters + Strings.Digits + Strings.SpecialCharacters;
-        char[] password = new char[length];
-
-        for (int i = 0; i < length; i++)
-        {
-            int randomIndex = rand.Next(0, allCharacters.Length);
-            password[i] = allCharacters[randomIndex];
-        }
-
-        return new string(password);
-    }
-
-}
-
-
 class ConsoleSmartPasswordGeneratorApp
 {
     static void Main(string[] args)
     {
         CharacterPrinter printer = new CharacterPrinter();
         Console.WriteLine("*** Console Smart Password Generator ***");
-        SmartRandomGen smartRandomGen = new SmartRandomGen();
+        SmartPassGen smartPassGen = new SmartPassGen();
         string password = "";
         Console.WriteLine("Enter password length: ");
         printer.PrintCharacter('-', 23);
@@ -97,7 +202,7 @@ class ConsoleSmartPasswordGeneratorApp
         printer.PrintCharacter('-', 23);
         secretPhrase = Console.ReadLine();
         printer.PrintCharacter('-', 23);
-        password = smartRandomGen.GenerateSmartRandomString(passwordLength, secretPhrase);
+        password = smartPassGen.CreateSmartPassword(passwordLength, secretPhrase);
         Console.WriteLine(password);
         printer.PrintCharacter('-', 23);
         Console.WriteLine("Press <Enter> to exit...");
