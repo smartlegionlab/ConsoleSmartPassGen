@@ -9,7 +9,7 @@ class Strings
     public static readonly string UppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     public static readonly string LowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
     public static readonly string Digits = "0123456789";
-    public static readonly string SpecialCharacters = "!@#$%^&*()";
+    public static readonly string SpecialCharacters = "@$!%*#?&-";
 }
 
 class CharacterPrinter
