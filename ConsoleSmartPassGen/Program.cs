@@ -8,9 +8,9 @@ class StringDataMaster
 {
     public Random rand = new Random();
     public string numbers = "1234567890";
-    public string simbols = "@$!%*#?&-";
-    public string smallLeters = "abcdefjhijklmnopqrstuvwxyz";
-    public string bigLeters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    public string simbols = "!@#$%&^_";
+    public string smallLetters = "abcdefjhijklmnopqrstuvwxyz";
+    public string bigLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public char[] GetNumbers()
     {
@@ -22,19 +22,19 @@ class StringDataMaster
         return this.simbols.ToCharArray();
     }
 
-    public char[] GetSmallLaters()
+    public char[] GetSmallLetters()
     {
-        return this.smallLeters.ToCharArray();
+        return this.smallLetters.ToCharArray();
     }
 
-    public char[] GetBigLaters()
+    public char[] GetBigLetters()
     {
-        return this.bigLeters.ToCharArray();
+        return this.bigLetters.ToCharArray();
     }
 
     public char[] GetAllStrings()
     {
-        string letters = this.numbers + this.simbols + this.smallLeters + this.bigLeters;
+        string letters = this.numbers + this.simbols + this.smallLetters + this.bigLetters;
         return letters.ToCharArray();
     }
 }
@@ -79,14 +79,14 @@ class BaseRandomGen
 
     public string CreateRandomSmallLetters(int length)
     {
-        char[] smallLetters = this.stringDataMaster.GetSmallLaters();
+        char[] smallLetters = this.stringDataMaster.GetSmallLetters();
         string newString = this.GetRandomString(smallLetters, length);
         return newString;
     }
 
     public string CreateRandomBigLetters(int length)
     {
-        char[] bigLetters = this.stringDataMaster.GetBigLaters();
+        char[] bigLetters = this.stringDataMaster.GetBigLetters();
         string newString = this.GetRandomString(bigLetters, length);
         return newString;
     }
